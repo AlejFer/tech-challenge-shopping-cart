@@ -53,6 +53,22 @@ paths:
         404:
           description: Product not found
           content: {}
+  /products/cart:
+    post:
+      tags:
+      - Products
+      description: Cart Summary
+      requestBody:
+        description: Cart Products
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartProductsBody'
+        required: true
+      responses:
+        200:
+          description: Returns Cart Summary
+          content: {}
   /spec:
     get:
       tags:
@@ -80,3 +96,26 @@ components:
         cost:
           type: number
           example: 1099
+    CartProductBody:
+      title: CartProduct
+      required:
+      - productId
+      - quantity
+      type: object
+      properties:
+        productId:
+          type: number
+          example: 1
+        quantity:
+          type: number
+          example: 5
+    CartProductsBody:
+      title: CartProducts
+      required:
+      - products
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/CartProductBody'

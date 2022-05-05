@@ -8,6 +8,27 @@ interface Product {
   cost: number;
 }
 
+interface CartProduct {
+  productId: number;
+  quantity: number;
+}
+
+interface CartProductSummary {
+  quantity: number;
+  name: string;
+  unitPrice: string;
+  totalPrice: string;
+}
+
+export interface CartEntry {
+  products: CartProduct[];
+}
+
+interface Cart {
+  products: CartProductSummary[];
+  total: string;
+}
+
 const products: Product[] = [
   { id: id++, name: 'Soup', customerPrice: 199, cost: 186 },
   { id: id++, name: 'Bread', customerPrice: 87, cost: 21 },
@@ -36,6 +57,29 @@ export class ProductsService {
     };
     products.push(product);
     return Promise.resolve(product);
+  }
+
+  cartSummary(cartProducts: CartProduct[] = []): Promise<Cart> {
+    const cart: Cart = {
+      products: [],
+      total: '',
+    };
+    let total = 0;
+    cartProducts.forEach((cartPrd) => {
+      if (cartPrd.productId <= products.length && cartPrd.productId >= 1) {
+        const p = products[cartPrd.productId - 1];
+        const totalPrice = p.customerPrice * cartPrd.quantity;
+        cart.products.push({
+          name: p.name,
+          quantity: cartPrd.quantity,
+          unitPrice: `$${p.customerPrice}`,
+          totalPrice: `$${totalPrice}`,
+        });
+        total += totalPrice;
+      }
+    });
+    cart.total = `$${total}`;
+    return Promise.resolve(cart);
   }
 }
 

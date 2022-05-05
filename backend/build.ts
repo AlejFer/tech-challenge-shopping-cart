@@ -1,5 +1,6 @@
 import s from 'shelljs';
-const config = require('./tsconfig.json');
+//const config = require('./tsconfig.json');
+import config from './tsconfig.json';
 const outDir = config.compilerOptions.outDir;
 
 s.rm('-rf', outDir);

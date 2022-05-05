@@ -1,4 +1,4 @@
-import ProductsService from '../../services/products.service';
+import ProductsService, { CartEntry } from '../../services/products.service';
 import { Request, Response } from 'express';
 
 export class Controller {
@@ -19,6 +19,11 @@ export class Controller {
     ProductsService.create(name, customerPrice, cost).then((r) =>
       res.status(201).location(`/api/v1/product/${r.id}`).json(r)
     );
+  }
+
+  cartSummary(req: Request, res: Response): void {
+    const { products } = req.body as CartEntry;
+    ProductsService.cartSummary(products).then((r) => res.json(r));
   }
 }
 export default new Controller();
