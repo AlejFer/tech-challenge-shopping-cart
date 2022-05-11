@@ -1,12 +1,12 @@
 import React from 'react';
 import { AppStyles } from './AppStyles';
-import Counter from '../../containers/Counter';
+import ProductList from '../../containers/ProductList';
 
 function App() {
   return (
       <AppStyles className="App">
           <header className="App-header">
-              <Counter />
+              <ProductList />
           </header>
       </AppStyles>
   );
